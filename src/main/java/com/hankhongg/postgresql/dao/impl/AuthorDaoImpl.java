@@ -35,6 +35,16 @@ public class AuthorDaoImpl implements AuthorDao {
         return jdbcTemplate.query("select id, name, age from authors", new AuthorRowMapper());
     }
 
+    public void update(long id, Author author) {
+        jdbcTemplate.update("update authors set id = ?, name = ?, age = ? where id = ?",
+                author.getId(), author.getName(), author.getAge(), id);
+    }
+
+    public void delete(long id) {
+        jdbcTemplate.update("delete from authors where id = ?", id);
+    }
+
+
     // do i really need this? => YES
     public static class AuthorRowMapper implements RowMapper<Author> {
         @Override
@@ -42,4 +52,5 @@ public class AuthorDaoImpl implements AuthorDao {
             return Author.builder().id(rs.getLong("id")).name(rs.getString("name")).age(rs.getInt("age")).build();
         }
     }
+
 }

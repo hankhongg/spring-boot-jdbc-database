@@ -38,4 +38,17 @@ public class BookDaoImplTests {
                 eq("B01")
         );
     }
+    @Test
+    public void testUpdateBook(){
+        Book book = TestDataUtil.getTestBook1();
+        bookDaoUnderTest.update(book.getIsbn(), book);
+        verify(jdbcTemplate).update(eq("update books set isbn = ?, title = ?, author_id = ? where isbn = ?"),
+                eq("B01"), eq("A Man Called Ove"),eq(1L), eq("B01"));
+    }
+    @Test
+    public void testDeleteBook(){
+        Book book = TestDataUtil.getTestBook1();
+        bookDaoUnderTest.delete(book.getIsbn());
+        verify(jdbcTemplate).update(eq("delete from books where isbn = ?"), eq(book.getIsbn()));
+    }
 }

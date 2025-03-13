@@ -43,4 +43,19 @@ public class AuthorDaoImplTests {
                 ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any(),
                 eq(1L));
     }
+
+    @Test
+    public void testUpdateAuthor() {
+        Author author = TestDataUtil.getTestAuthor1();
+        authorDaoUnderTest.update(author.getId(), author);
+        verify(jdbcTemplate).update(eq("update authors set id = ?, name = ?, age = ? where id = ?"),
+                eq(1L), eq("hankhongg"), eq(20), eq(author.getId()));
+    }
+
+    @Test
+    public void testDeleteAuthor() {
+        Author author = TestDataUtil.getTestAuthor1();
+        authorDaoUnderTest.delete(author.getId());
+        verify(jdbcTemplate).update(eq("delete from authors where id = ?"), eq(author.getId()));
+    }
 }

@@ -69,4 +69,35 @@ public class BookDaoImplIntegrationTests {
         List<Book> books = bookDaoUnderTest.findAll();
         assertThat(books).hasSize(3).containsExactly(book1, book2, book3);
     }
+    @Test
+    public void testBookCanBeUpdatedAndRecalled(){
+        Author author1 = TestDataUtil.getTestAuthor1();
+        authorDaoImpl.create(author1);
+        Book book1 = TestDataUtil.getTestBook1();
+        book1.setAuthorId(author1.getId());
+        bookDaoUnderTest.create(book1);
+
+        // change the title but only to the instance NOT the db
+        book1.setTitle("time to pay back i guess");
+        // then update it based on the id
+        bookDaoUnderTest.update(book1.getIsbn(), book1);
+
+        Optional<Book> result = bookDaoUnderTest.findOne(book1.getIsbn());
+        assertThat(result).isPresent();
+        assertThat(result.get()).isEqualTo(book1);
+    }
+    @Test
+    public void testBookCanBeDeletedAndRecalled(){
+        Author author1 = TestDataUtil.getTestAuthor1();
+        authorDaoImpl.create(author1);
+        Book book1 = TestDataUtil.getTestBook1();
+        book1.setAuthorId(author1.getId());
+        bookDaoUnderTest.create(book1);
+
+        // try to delete
+        bookDaoUnderTest.delete(book1.getIsbn());
+        // save result
+        Optional<Book> result = bookDaoUnderTest.findOne(book1.getIsbn());
+        assertThat(result).isEmpty();
+    }
 }
