@@ -20,12 +20,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class BookDaoImplIntegrationTests {
     private BookDaoImpl bookDaoUnderTest;
-    @Autowired
     private AuthorDaoImpl authorDaoImpl;
 
     @Autowired
-    public BookDaoImplIntegrationTests(BookDaoImpl bookDaoUnderTest) {
+    public BookDaoImplIntegrationTests(BookDaoImpl bookDaoUnderTest, AuthorDaoImpl authorDaoImpl) {
         this.bookDaoUnderTest = bookDaoUnderTest;
+        this.authorDaoImpl = authorDaoImpl;
     }
     @Test
     public void testBookCanBeCreatedAndRecalled(){
