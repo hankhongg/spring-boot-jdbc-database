@@ -4,12 +4,14 @@ import com.hankhongg.postgresql.dao.BookDao;
 import com.hankhongg.postgresql.domain.Book;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class BookDaoImpl implements BookDao {
     private final JdbcTemplate jdbcTemplate;
     public BookDaoImpl(final JdbcTemplate jdbcTemplate) {
@@ -23,7 +25,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override // need to be public
     public Optional<Book> findOne(String isbn) {
-        String sql = "select isbn, title, authorId from books where isbn = ? limit 1";
+        String sql = "select isbn, title, author_id from books where isbn = ? limit 1";
         List<Book> results = jdbcTemplate.query(sql, new BookRowMapper(), isbn);
         return results.stream().findFirst();
     }
