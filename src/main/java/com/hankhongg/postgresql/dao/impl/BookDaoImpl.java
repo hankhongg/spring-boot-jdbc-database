@@ -23,18 +23,19 @@ public class BookDaoImpl implements BookDao {
         jdbcTemplate.update(sql, book.getIsbn(), book.getTitle(), book.getAuthorId());
     }
 
-    @Override // need to be public
     public Optional<Book> findOne(String isbn) {
         String sql = "select isbn, title, author_id from books where isbn = ? limit 1";
         List<Book> results = jdbcTemplate.query(sql, new BookRowMapper(), isbn);
         return results.stream().findFirst();
     }
+    public List<Book> findAll() {
+        return jdbcTemplate.query("select isbn, title, author_id from books", new BookRowMapper());
+    }
 
     public static class BookRowMapper implements RowMapper<Book> {
-
         @Override
         public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return Book.builder().isbn(rs.getString("isbn")).title(rs.getString("title")).authorId(rs.getLong("authorId")).build();
+            return Book.builder().isbn(rs.getString("isbn")).title(rs.getString("title")).authorId(rs.getLong("author_id")).build();
         }
     }
 }

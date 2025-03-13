@@ -14,7 +14,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class AuthorDaoImplTest {
+public class AuthorDaoImplTests {
     @Mock // tạo đối tượng giả
     private JdbcTemplate jdbcTemplate;
     @InjectMocks // chích đối tượng giả vào dữ liệu cần test
@@ -24,7 +24,7 @@ public class AuthorDaoImplTest {
     // xem jdbcTemplate có thực sự gọi update() với đúng tham số không
     @Test
     public void testCreateAuthor() {
-        Author author = TestDataUtil.getTestAuthor();
+        Author author = TestDataUtil.getTestAuthor1();
         authorDaoUnderTest.create(author);
         // verify (kiếm tra) xem query sau có thực sự được thực hiện không7
         verify(jdbcTemplate).update(

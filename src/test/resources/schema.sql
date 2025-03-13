@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS books;
 DROP TABLE IF EXISTS authors;
 
 CREATE TABLE "authors"(
-    "id" bigint DEFAULT nextval('authorId_sql') NOT NULL,
+    "id" bigint DEFAULT nextval('author_id_seq') NOT NULL,
     "name" text,
     "age" integer,
     CONSTRAINT "authors_pkey" PRIMARY KEY ("id")
@@ -13,5 +13,5 @@ CREATE TABLE "books"(
       "title" text,
       "author_id" bigint,
       CONSTRAINT "books_pkey" primary key ("isbn"),
-      CONSTRAINT "fk_author" foreign key ("author_id") references authors("id")
+      CONSTRAINT "fk_author" foreign key ("author_id") references "authors"("id")
 );

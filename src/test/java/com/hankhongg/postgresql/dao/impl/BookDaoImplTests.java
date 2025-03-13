@@ -14,14 +14,14 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class BookDaoImplTest {
+public class BookDaoImplTests {
     @Mock
     JdbcTemplate jdbcTemplate;
     @InjectMocks
     BookDaoImpl bookDaoUnderTest;
     @Test
     public void testCreateBook(){
-        Book book = TestDataUtil.getTestBook();
+        Book book = TestDataUtil.getTestBook1();
         bookDaoUnderTest.create(book);
         verify(jdbcTemplate).update(eq("insert into books values (?,?,?)"),
                 eq("B01"),
@@ -37,6 +37,5 @@ public class BookDaoImplTest {
                 ArgumentMatchers.<BookDaoImpl.BookRowMapper>any(),
                 eq("B01")
         );
-
     }
 }

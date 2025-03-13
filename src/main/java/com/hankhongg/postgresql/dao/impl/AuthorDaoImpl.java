@@ -31,7 +31,11 @@ public class AuthorDaoImpl implements AuthorDao {
         return results.stream().findFirst(); // stream it all over then find the first then return it
     }
 
-    // do i really need this?
+    public List<Author> findAll(){
+        return jdbcTemplate.query("select id, name, age from authors", new AuthorRowMapper());
+    }
+
+    // do i really need this? => YES
     public static class AuthorRowMapper implements RowMapper<Author> {
         @Override
         public Author mapRow(ResultSet rs, int rowNum) throws SQLException {
