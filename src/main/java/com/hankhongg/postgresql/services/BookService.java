@@ -5,4 +5,5 @@ import com.hankhongg.postgresql.domain.entities.BookEntity;
 
 public interface BookService {
     public BookEntity createBook(BookEntity bookEntity, String isbn);
+
 }

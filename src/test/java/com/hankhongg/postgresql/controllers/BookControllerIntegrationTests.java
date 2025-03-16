@@ -33,7 +33,7 @@ public class BookControllerIntegrationTests {
     }
 
     @Test
-    public void http201BookCreateTest() throws Exception {
+    public void http201BookCreateTestStatus() throws Exception {
         BookDto bookDto = TestDataUtil.getDtoTestBook1(null);
         String bookJson = objectMapper.writeValueAsString(bookDto);
         mockMvc.perform(MockMvcRequestBuilders.put("/books/" +  bookDto.getIsbn())
@@ -43,7 +43,7 @@ public class BookControllerIntegrationTests {
         );
     }
     @Test
-    public void http201BookReturnedSavedBookTest() throws Exception {
+    public void http201BookCreateTest() throws Exception {
         BookDto bookDto = TestDataUtil.getDtoTestBook1(null);
         String bookJson = objectMapper.writeValueAsString(bookDto);
         mockMvc.perform(MockMvcRequestBuilders.put("/books/" +  bookDto.getIsbn())

@@ -30,7 +30,7 @@ public class AuthorControllerIntegrationTests {
         this.mapper = mapper;
     }
     @Test
-    public void http201AuthorCreatedTest() throws Exception {
+    public void http201AuthorCreatedTestStatus() throws Exception {
         // get test author data
         AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
         // transfer into json to compare with mockmvc
@@ -45,7 +45,7 @@ public class AuthorControllerIntegrationTests {
         // so it actually return http status of 200 instead of 201 => fix inside authorController
     }
     @Test
-    public void http200AuthorReturnedSavedAuthorTest() throws Exception {
+    public void http201AuthorCreatedTest() throws Exception {
         AuthorDto authorDto = TestDataUtil.getDtoTestAuthor1();
         String authorJson = mapper.writeValueAsString(authorDto);
         mockMvc.perform(MockMvcRequestBuilders.post("/authors")
@@ -59,6 +59,28 @@ public class AuthorControllerIntegrationTests {
                 MockMvcResultMatchers.jsonPath("$.name").value("hankhongg")
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.age").value(20)
+        );
+    }
+    @Test
+    public void http200AuthorListAllTestStatus() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/authors")
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+    // to test all => check for the first index of objects
+    // need to use service to add one to check, as it keeps delete everything after per run
+    @Test
+    public void http200AuthorListAllTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/authors")
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].id").isNumber()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].name").value("hankhongg")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].age").value(20)
         );
     }
 }

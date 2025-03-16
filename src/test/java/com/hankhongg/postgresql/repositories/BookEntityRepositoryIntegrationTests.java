@@ -18,12 +18,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class BookEntityDaoImplIntegrationTests {
+public class BookEntityRepositoryIntegrationTests {
     private BookRepository bookRepository;
     private AuthorRepository authorRepository;
 
     @Autowired
-    public BookEntityDaoImplIntegrationTests(BookRepository bookRepository, AuthorRepository authorRepository) {
+    public BookEntityRepositoryIntegrationTests(BookRepository bookRepository, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
     }

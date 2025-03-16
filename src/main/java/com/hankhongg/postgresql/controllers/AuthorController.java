@@ -7,9 +7,11 @@ import com.hankhongg.postgresql.mappers.impl.AuthorMapper;
 import com.hankhongg.postgresql.services.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class AuthorController {
@@ -28,5 +30,17 @@ public class AuthorController {
         AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
         AuthorEntity savedAuthorEntity = authorService.save(authorEntity);
         return new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.CREATED); // this is AuthorDto then need to ResponeEntity<T>
+    }
+    @GetMapping(path="/authors")
+    public List<AuthorDto> listAuthors(){
+        List<AuthorEntity> authorEntityList = authorService.findAll();
+        List<AuthorDto> gottenAuthorDtoList = authorEntityList.stream().map(authorMapper::mapTo).collect(Collectors.toList());
+        return gottenAuthorDtoList;
+    }
+    @DeleteMapping(path="/authors")
+    public List<AuthorDto> deleteAllAuthors() {
+        List<AuthorEntity> authorEntityList = authorService.deleteAllAuthors();
+        List<AuthorDto> authorDtoList = authorEntityList.stream().map(authorMapper::mapTo).collect(Collectors.toList());
+        return authorDtoList;
     }
 }
