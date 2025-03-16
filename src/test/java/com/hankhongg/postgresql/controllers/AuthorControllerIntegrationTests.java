@@ -8,6 +8,7 @@ import com.hankhongg.postgresql.domain.entities.AuthorEntity;
 import com.hankhongg.postgresql.services.AuthorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -209,6 +210,27 @@ public class AuthorControllerIntegrationTests {
                 MockMvcResultMatchers.jsonPath("$.name").value("UPDATED")
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.age").value(authorEntity .getAge())
+        );
+    }
+    @Test
+    public void http404AuthorDeleteTestStatusNOTFOUND() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/authors/99")
+                        .contentType(MediaType.APPLICATION_JSON)
+
+        ).andExpect(
+                MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+    @Test
+    public void http204AuthorDeleteTestStatus() throws Exception {
+        AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
+        authorService.save(authorEntity);
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/authors/" + authorEntity.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isNoContent()
         );
     }
 }
