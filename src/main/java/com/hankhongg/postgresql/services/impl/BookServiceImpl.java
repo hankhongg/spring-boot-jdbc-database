@@ -5,8 +5,10 @@ import com.hankhongg.postgresql.domain.entities.BookEntity;
 import com.hankhongg.postgresql.repositories.BookRepository;
 import com.hankhongg.postgresql.services.BookService;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,5 +55,9 @@ public class BookServiceImpl implements BookService {
     public void delete(String isbn) {
         // gotta use this instead of bookRepository.deleteByIsbn(isbn)
         bookRepository.findByIsbn(isbn).ifPresent(bookRepository::delete);
+    }
+    @Override
+    public Page<BookEntity> findAll(Pageable pageable){
+        return bookRepository.findAll(pageable);
     }
 }

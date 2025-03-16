@@ -5,10 +5,12 @@ import com.hankhongg.postgresql.domain.entities.AuthorEntity;
 import com.hankhongg.postgresql.domain.entities.BookEntity;
 import com.hankhongg.postgresql.mappers.Mapper;
 import com.hankhongg.postgresql.services.BookService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,12 +43,20 @@ public class BookController {
 
     }
 
+//    @GetMapping(path="/books")
+//    public List<BookDto> listBooks() {
+//        List<BookEntity> bookEntityList = bookService.findAll();
+//        List<BookDto> bookDtoList = bookEntityList.stream().map(bookMapper::mapTo).collect(Collectors.toList());
+//        return bookDtoList;
+//    }
+    
+    // use http://localhost:8080/books?size=1&page=1 to limit page and size
     @GetMapping(path="/books")
-    public List<BookDto> listBooks() {
-        List<BookEntity> bookEntityList = bookService.findAll();
-        List<BookDto> bookDtoList = bookEntityList.stream().map(bookMapper::mapTo).collect(Collectors.toList());
-        return bookDtoList;
+    public Page<BookDto> findAll(Pageable pageable){
+        Page<BookEntity> bookEntities = bookService.findAll(pageable);
+        return bookEntities.map(bookEntity -> bookMapper.mapTo(bookEntity));
     }
+
 
     @GetMapping(path="/books/{isbn}")
     public ResponseEntity<BookDto> find(@PathVariable("isbn") String isbn) {

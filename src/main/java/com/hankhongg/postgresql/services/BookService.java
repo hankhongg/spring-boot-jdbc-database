@@ -2,7 +2,9 @@ package com.hankhongg.postgresql.services;
 
 import com.hankhongg.postgresql.domain.dto.BookDto;
 import com.hankhongg.postgresql.domain.entities.BookEntity;
+import org.springframework.data.domain.Page;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,4 +16,6 @@ public interface BookService {
     public List<BookEntity> deleteAllBooks();
     public BookEntity partialUpdate(String isbn, BookEntity bookEntity);
     public void delete(String isbn);
+
+    public Page<BookEntity> findAll(Pageable pageable);
 }
