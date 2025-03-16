@@ -40,7 +40,7 @@ public class BookEntityDaoImplIntegrationTests {
         // hibernate jpa one
         AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
         authorRepository.save(authorEntity);
-        BookEntity bookEntity = TestDataUtil.getTestBook1(authorEntity);
+        BookEntity bookEntity = TestDataUtil.getEntityTestBook1(authorEntity);
         bookRepository.save(bookEntity);
         Optional<BookEntity> result = bookRepository.findByIsbn(bookEntity.getIsbn());
         assertThat(result.isPresent()).isTrue();
@@ -59,9 +59,9 @@ public class BookEntityDaoImplIntegrationTests {
         authorRepository.save(authorEntity3);
 
         //create 3 book instances
-        BookEntity bookEntity1 = TestDataUtil.getTestBook1(authorEntity1);
-        BookEntity bookEntity2 = TestDataUtil.getTestBook2(authorEntity2);
-        BookEntity bookEntity3 = TestDataUtil.getTestBook3(authorEntity3);
+        BookEntity bookEntity1 = TestDataUtil.getEntityTestBook1(authorEntity1);
+        BookEntity bookEntity2 = TestDataUtil.getEntityTestBook2(authorEntity2);
+        BookEntity bookEntity3 = TestDataUtil.getEntityTestBook3(authorEntity3);
 
         //set authorid for 3 books
 
@@ -79,7 +79,7 @@ public class BookEntityDaoImplIntegrationTests {
     public void bookCanBeUpdatedAndRecalledHibernateTest(){
         AuthorEntity authorEntity1 = TestDataUtil.getEntityTestAuthor1();
         authorRepository.save(authorEntity1);
-        BookEntity bookEntity1 = TestDataUtil.getTestBook1(authorEntity1);
+        BookEntity bookEntity1 = TestDataUtil.getEntityTestBook1(authorEntity1);
         bookRepository.save(bookEntity1);
         bookEntity1.setTitle("new title");
         bookRepository.save(bookEntity1);
@@ -91,7 +91,7 @@ public class BookEntityDaoImplIntegrationTests {
     public void bookCanBeDeletedAndRecalledHibernateTest(){
         AuthorEntity authorEntity1 = TestDataUtil.getEntityTestAuthor1();
         authorRepository.save(authorEntity1);
-        BookEntity bookEntity1 = TestDataUtil.getTestBook1(authorEntity1);
+        BookEntity bookEntity1 = TestDataUtil.getEntityTestBook1(authorEntity1);
         bookRepository.save(bookEntity1);
         bookRepository.delete(bookEntity1);
         // try to delete

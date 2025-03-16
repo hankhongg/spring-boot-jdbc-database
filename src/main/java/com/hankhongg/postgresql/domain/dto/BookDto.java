@@ -15,5 +15,5 @@ public class BookDto {
 
     private String title; // | cascade = CascadeType.ALL means all changes made to authors would eventually make to books
 
-    private AuthorDto authorEntity;
+    private AuthorDto author;
 }

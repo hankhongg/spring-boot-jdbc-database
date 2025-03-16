@@ -20,5 +20,5 @@ public class BookEntity {
 
     @ManyToOne(cascade = CascadeType.ALL) // 1 book 1 author BUT n books can belong to only 1 author
     @JoinColumn(name = "author_id") // join the other column - which obviously is "author_id"
-    private AuthorEntity authorEntity; //bc its Spring so u can do it :o
+    private AuthorEntity author; //bc its Spring so u can do it :o
 }

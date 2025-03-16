@@ -1,6 +1,7 @@
 package com.hankhongg.postgresql;
 
 import com.hankhongg.postgresql.domain.dto.AuthorDto;
+import com.hankhongg.postgresql.domain.dto.BookDto;
 import com.hankhongg.postgresql.domain.entities.AuthorEntity;
 import com.hankhongg.postgresql.domain.entities.BookEntity;
 
@@ -30,13 +31,25 @@ public final class TestDataUtil {
     }
 
     // book related
-    public static BookEntity getTestBook1(AuthorEntity authorEntity) {
-        return BookEntity.builder().isbn("B01").title("A Man Called Ove").authorEntity(authorEntity).build();
+        // entities
+    public static BookEntity getEntityTestBook1(AuthorEntity authorEntity) {
+        return BookEntity.builder().isbn("B01").title("A Man Called Ove").author(authorEntity).build();
     }
-    public static BookEntity getTestBook2(AuthorEntity authorEntity) {
-        return BookEntity.builder().isbn("B02").title("Atomic Habits").authorEntity(authorEntity).build();
+    public static BookEntity getEntityTestBook2(AuthorEntity authorEntity) {
+        return BookEntity.builder().isbn("B02").title("Atomic Habits").author(authorEntity).build();
     }
-    public static BookEntity getTestBook3(AuthorEntity authorEntity) {
-        return BookEntity.builder().isbn("B03").title("Unreadable Book").authorEntity(authorEntity).build();
+    public static BookEntity getEntityTestBook3(AuthorEntity authorEntity) {
+        return BookEntity.builder().isbn("B03").title("Unreadable Book").author(authorEntity).build();
     }
+        // dtos
+    public static BookDto getDtoTestBook1(AuthorDto authorDto) {
+        return BookDto.builder().isbn("B01").title("A Man Called Ove").author(authorDto).build();
+    }
+    public static BookDto getDtoTestBook2(AuthorDto authorDto) {
+        return BookDto.builder().isbn("B02").title("Atomic Habits").author(authorDto).build();
+    }
+    public static BookDto getDtoTestBook3(AuthorDto authorDto) {
+        return BookDto.builder().isbn("B03").title("Unreadable Book").author(authorDto).build();
+    }
+
 }
