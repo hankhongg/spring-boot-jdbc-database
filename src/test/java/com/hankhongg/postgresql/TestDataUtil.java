@@ -18,13 +18,13 @@ public final class TestDataUtil {
     }
 
     // book related
-    public static Book getTestBook1() {
-        return Book.builder().isbn("B01").title("A Man Called Ove").authorId(1L).build();
+    public static Book getTestBook1(Author author) {
+        return Book.builder().isbn("B01").title("A Man Called Ove").author(author).build();
     }
-    public static Book getTestBook2() {
-        return Book.builder().isbn("B02").title("Atomic Habits").authorId(2L).build();
+    public static Book getTestBook2(Author author) {
+        return Book.builder().isbn("B02").title("Atomic Habits").author(author).build();
     }
-    public static Book getTestBook3() {
-        return Book.builder().isbn("B03").title("Unreadable Book").authorId(3L).build();
+    public static Book getTestBook3(Author author) {
+        return Book.builder().isbn("B03").title("Unreadable Book").author(author).build();
     }
 }
