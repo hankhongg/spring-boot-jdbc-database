@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -42,5 +43,13 @@ public class AuthorController {
         List<AuthorEntity> authorEntityList = authorService.deleteAllAuthors();
         List<AuthorDto> authorDtoList = authorEntityList.stream().map(authorMapper::mapTo).collect(Collectors.toList());
         return authorDtoList;
+    }
+    @GetMapping(path="/authors/{id}")
+    public ResponseEntity<AuthorDto> getAuthorById(@PathVariable("id") Long id) {
+        Optional<AuthorEntity> foundAuthor = authorService.find(id);
+        return foundAuthor.map(authorEntity -> {
+                AuthorDto authorDto = authorMapper.mapTo(authorEntity);
+                return new ResponseEntity<>(authorDto, HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

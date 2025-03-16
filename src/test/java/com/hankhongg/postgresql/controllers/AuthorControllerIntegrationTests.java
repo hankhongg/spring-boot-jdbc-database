@@ -88,4 +88,38 @@ public class AuthorControllerIntegrationTests {
                 MockMvcResultMatchers.jsonPath("$[0].age").value(20)
         );
     }
+    @Test
+    public void http200AuthorFindOneTestStatus() throws Exception {
+        AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
+        authorService.save(authorEntity);
+        mockMvc.perform(MockMvcRequestBuilders.get("/authors/" + authorEntity.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(
+                        MockMvcResultMatchers.status().isOk()
+                );
+    }
+    @Test
+    public void http200AuthorFindOneTestStatusNOTFOUND() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/authors/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(
+                        MockMvcResultMatchers.status().isNotFound()
+                );
+    }
+    @Test
+    public void http200AuthorFindOneTest() throws Exception {
+        AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
+        authorService.save(authorEntity);
+        mockMvc.perform(MockMvcRequestBuilders.get("/authors/" + authorEntity.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(
+                        MockMvcResultMatchers.jsonPath("$.id").value(authorEntity.getId())
+                ).andExpect(
+                        MockMvcResultMatchers.jsonPath("$.name").value(authorEntity.getName())
+                ).andExpect(
+                        MockMvcResultMatchers.jsonPath("$.age").value(authorEntity.getAge())
+                );
+    }
+
 }

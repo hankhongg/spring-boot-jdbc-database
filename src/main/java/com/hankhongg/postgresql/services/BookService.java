@@ -8,5 +8,6 @@ import java.util.List;
 public interface BookService {
     public BookEntity createBook(BookEntity bookEntity, String isbn);
     public List<BookEntity> findAll();
+    public BookEntity getBook(Long id);
 
 }
