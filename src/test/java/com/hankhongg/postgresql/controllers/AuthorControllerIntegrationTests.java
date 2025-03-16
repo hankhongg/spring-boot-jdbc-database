@@ -122,4 +122,47 @@ public class AuthorControllerIntegrationTests {
                 );
     }
 
+    @Test
+    public void http200AuthorFullUpdateTestStatusNOTFOUND() throws Exception {
+        AuthorDto authorDto = TestDataUtil.getDtoTestAuthor1();
+        String authorJson = mapper.writeValueAsString(authorDto);
+        mockMvc.perform(MockMvcRequestBuilders.put("/authors/999")
+                .contentType(MediaType.APPLICATION_JSON).content(authorJson)
+                ).andExpect(
+                        MockMvcResultMatchers.status().isNotFound()
+
+        );
+    }
+    @Test
+    public void http200AuthorFullUpdateTestStatus() throws Exception {
+        AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
+        authorService.save(authorEntity);
+        // gotta save the authorEntity
+        // cuz when using Dto the id is null => 400 client fault
+        AuthorDto authorDto = TestDataUtil.getDtoTestAuthor1();
+        String authorJson = mapper.writeValueAsString(authorDto);
+        mockMvc.perform(MockMvcRequestBuilders.put("/authors/" + authorEntity.getId()
+                ).contentType(MediaType.APPLICATION_JSON).content(authorJson))
+                .andExpect(
+                        MockMvcResultMatchers.status().isOk()
+                );
+    }
+    @Test
+    public void http200AuthorFullUpdateTest() throws Exception {
+        AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
+        authorService.save(authorEntity);
+
+        AuthorDto authorDto = TestDataUtil.getDtoTestAuthor1();
+        String authorJson = mapper.writeValueAsString(authorDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/authors/" + authorEntity.getId()
+                ).contentType(MediaType.APPLICATION_JSON).content(authorJson))
+                .andExpect(
+                        MockMvcResultMatchers.jsonPath("$.id").value(authorEntity.getId())
+                ).andExpect(
+                        MockMvcResultMatchers.jsonPath("$.name").value(authorDto.getName())
+                ).andExpect(
+                        MockMvcResultMatchers.jsonPath("$.age").value(authorDto.getAge())
+                );
+    }
 }

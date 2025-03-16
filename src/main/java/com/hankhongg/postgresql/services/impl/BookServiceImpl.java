@@ -29,4 +29,5 @@ public class BookServiceImpl implements BookService {
     public Optional<BookEntity> find(String isbn) {
         return bookRepository.findByIsbn(isbn);
     }
+
 }

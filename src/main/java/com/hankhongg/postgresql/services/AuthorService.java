@@ -11,4 +11,5 @@ public interface AuthorService {
     public List<AuthorEntity> findAll();
     public List<AuthorEntity> deleteAllAuthors();
     public Optional<AuthorEntity> find(Long id);
+    public boolean isExists(Long id);
 }

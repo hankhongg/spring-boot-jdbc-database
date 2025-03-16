@@ -35,4 +35,8 @@ public class AuthorServiceImpl implements AuthorService {
     public Optional<AuthorEntity> find(Long id){
         return authorRepository.findById(id); // bc its optional so gotta go .get()
     }
+    @Override
+    public boolean isExists(Long id){
+        return authorRepository.existsById(id);
+    }
 }
