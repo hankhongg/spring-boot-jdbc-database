@@ -8,7 +8,7 @@ public final class TestDataUtil {
 
     // author related
     public static Author getTestAuthor1() {
-        return Author.builder().age(20).id(1L).name("hankhongg").build();
+        return Author.builder().age(20).id(null).name("hankhongg").build();
     }
     public static Author getTestAuthor2() {
         return Author.builder().age(18).id(2L).name("teando").build();

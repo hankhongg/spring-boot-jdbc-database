@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,12 +20,28 @@ public class AuthorRepositoryIntegrationTests {
     public AuthorRepositoryIntegrationTests(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
+    @Autowired
+    private DataSource dataSource;
+    @Test
+    void checkDatabaseConnection() throws Exception {
+        try (Connection connection = dataSource.getConnection()) {
+            DatabaseMetaData metaData = connection.getMetaData();
+            System.out.println("Database URL: " + metaData.getURL());
+        }
+    }
     @Test
     public void authorCreateHibernateTest() {
+//        Author author = TestDataUtil.getTestAuthor1();
+//        author.setId(null);
+//        authorRepository.save(author);
+//        Optional<Author> result = authorRepository.findById(author.getId());
+//        assertThat(result.isPresent()).isTrue();
+//        assertThat(author).isEqualTo(result);
+
         Author author = TestDataUtil.getTestAuthor1();
-        authorRepository.save(author);
+        author = authorRepository.save(author);
         Optional<Author> result = authorRepository.findById(author.getId());
         assertThat(result.isPresent()).isTrue();
-        assertThat(author).isEqualTo(result);
+        assertThat(author).isEqualTo(result.get());
     }
 }
