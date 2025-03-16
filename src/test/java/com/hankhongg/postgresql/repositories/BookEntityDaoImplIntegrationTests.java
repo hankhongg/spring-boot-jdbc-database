@@ -38,7 +38,7 @@ public class BookEntityDaoImplIntegrationTests {
     @Test
     public void bookCreateHibernateTest(){
         // hibernate jpa one
-        AuthorEntity authorEntity = TestDataUtil.getTestAuthor1();
+        AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
         authorRepository.save(authorEntity);
         BookEntity bookEntity = TestDataUtil.getTestBook1(authorEntity);
         bookRepository.save(bookEntity);
@@ -49,9 +49,9 @@ public class BookEntityDaoImplIntegrationTests {
     @Test
     public void bookAllCanBeCreatedAndUpdated(){
         //get 3 author instances
-        AuthorEntity authorEntity1 = TestDataUtil.getTestAuthor1();
-        AuthorEntity authorEntity2 = TestDataUtil.getTestAuthor2();
-        AuthorEntity authorEntity3 = TestDataUtil.getTestAuthor3();
+        AuthorEntity authorEntity1 = TestDataUtil.getEntityTestAuthor1();
+        AuthorEntity authorEntity2 = TestDataUtil.getEntityTestAuthor2();
+        AuthorEntity authorEntity3 = TestDataUtil.getEntityTestAuthor3();
 
         //add to database 3 author instances
         authorRepository.save(authorEntity1);
@@ -77,7 +77,7 @@ public class BookEntityDaoImplIntegrationTests {
      }
     @Test
     public void bookCanBeUpdatedAndRecalledHibernateTest(){
-        AuthorEntity authorEntity1 = TestDataUtil.getTestAuthor1();
+        AuthorEntity authorEntity1 = TestDataUtil.getEntityTestAuthor1();
         authorRepository.save(authorEntity1);
         BookEntity bookEntity1 = TestDataUtil.getTestBook1(authorEntity1);
         bookRepository.save(bookEntity1);
@@ -89,7 +89,7 @@ public class BookEntityDaoImplIntegrationTests {
     }
     @Test
     public void bookCanBeDeletedAndRecalledHibernateTest(){
-        AuthorEntity authorEntity1 = TestDataUtil.getTestAuthor1();
+        AuthorEntity authorEntity1 = TestDataUtil.getEntityTestAuthor1();
         authorRepository.save(authorEntity1);
         BookEntity bookEntity1 = TestDataUtil.getTestBook1(authorEntity1);
         bookRepository.save(bookEntity1);

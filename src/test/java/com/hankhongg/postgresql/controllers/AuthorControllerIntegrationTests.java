@@ -3,6 +3,7 @@ package com.hankhongg.postgresql.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hankhongg.postgresql.TestDataUtil;
+import com.hankhongg.postgresql.domain.dto.AuthorDto;
 import com.hankhongg.postgresql.domain.entities.AuthorEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +32,7 @@ public class AuthorControllerIntegrationTests {
     @Test
     public void http201AuthorCreatedTest() throws Exception {
         // get test author data
-        AuthorEntity authorEntity = TestDataUtil.getTestAuthor1();
+        AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
         // transfer into json to compare with mockmvc
         String authorJson = mapper.writeValueAsString(authorEntity);
         // check by mockmvn
@@ -45,8 +46,8 @@ public class AuthorControllerIntegrationTests {
     }
     @Test
     public void http200AuthorReturnedSavedAuthorTest() throws Exception {
-        AuthorEntity authorEntity = TestDataUtil.getTestAuthor1();
-        String authorJson = mapper.writeValueAsString(authorEntity);
+        AuthorDto authorDto = TestDataUtil.getDtoTestAuthor1();
+        String authorJson = mapper.writeValueAsString(authorDto);
         mockMvc.perform(MockMvcRequestBuilders.post("/authors")
                 .contentType(
                         MediaType.APPLICATION_JSON

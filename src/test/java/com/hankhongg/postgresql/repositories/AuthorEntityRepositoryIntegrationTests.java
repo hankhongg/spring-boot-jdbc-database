@@ -44,7 +44,7 @@ public class AuthorEntityRepositoryIntegrationTests {
 //        assertThat(result.isPresent()).isTrue();
 //        assertThat(author).isEqualTo(result);
 
-        AuthorEntity authorEntity = TestDataUtil.getTestAuthor1();
+        AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
         authorEntity = authorRepository.save(authorEntity);
         Optional<AuthorEntity> result = authorRepository.findById(authorEntity.getId());
         assertThat(result.isPresent()).isTrue();
@@ -52,9 +52,9 @@ public class AuthorEntityRepositoryIntegrationTests {
     }
     @Test
     public void authorAllCanBeCreatedAndRecalledHibernateTest(){
-        AuthorEntity authorEntity1 = TestDataUtil.getTestAuthor1();
-        AuthorEntity authorEntity2 = TestDataUtil.getTestAuthor2();
-        AuthorEntity authorEntity3 = TestDataUtil.getTestAuthor3();
+        AuthorEntity authorEntity1 = TestDataUtil.getEntityTestAuthor1();
+        AuthorEntity authorEntity2 = TestDataUtil.getEntityTestAuthor2();
+        AuthorEntity authorEntity3 = TestDataUtil.getEntityTestAuthor3();
 
         authorRepository.save(authorEntity1);
         authorRepository.save(authorEntity2);
@@ -65,7 +65,7 @@ public class AuthorEntityRepositoryIntegrationTests {
     }
     @Test
     public void authorCanBeUpdatedAndRecalledHibernateTest(){
-        AuthorEntity authorEntity1 = TestDataUtil.getTestAuthor1();
+        AuthorEntity authorEntity1 = TestDataUtil.getEntityTestAuthor1();
         authorRepository.save(authorEntity1);
         // change the name but only to the instance NOT the db
         authorEntity1.setName("haruka");
@@ -85,7 +85,7 @@ public class AuthorEntityRepositoryIntegrationTests {
 //        authorDaoUnderTest.delete(author1.getId());
 //        Optional<Author> result = authorDaoUnderTest.findOne(author1.getId());
 //        assertThat(result).isEmpty();
-        AuthorEntity authorEntity1 = TestDataUtil.getTestAuthor1();
+        AuthorEntity authorEntity1 = TestDataUtil.getEntityTestAuthor1();
         authorRepository.save(authorEntity1);
         authorRepository.delete(authorEntity1);
         Optional<AuthorEntity> result = authorRepository.findById(authorEntity1.getId());

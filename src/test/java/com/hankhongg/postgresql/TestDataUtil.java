@@ -1,5 +1,6 @@
 package com.hankhongg.postgresql;
 
+import com.hankhongg.postgresql.domain.dto.AuthorDto;
 import com.hankhongg.postgresql.domain.entities.AuthorEntity;
 import com.hankhongg.postgresql.domain.entities.BookEntity;
 
@@ -7,14 +8,25 @@ public final class TestDataUtil {
     private TestDataUtil() {}
 
     // author related
-    public static AuthorEntity getTestAuthor1() {
+        // entities
+    public static AuthorEntity getEntityTestAuthor1() {
         return AuthorEntity.builder().age(20).id(null).name("hankhongg").build();
     }
-    public static AuthorEntity getTestAuthor2() {
+    public static AuthorEntity getEntityTestAuthor2() {
         return AuthorEntity.builder().age(18).id(null).name("teando").build();
     }
-    public static AuthorEntity getTestAuthor3() {
+    public static AuthorEntity getEntityTestAuthor3() {
         return AuthorEntity.builder().age(43).id(null).name("huynhngoc").build();
+    }
+        // dtos
+    public static AuthorDto getDtoTestAuthor1() {
+            return AuthorDto.builder().age(20).id(null).name("hankhongg").build();
+        }
+    public static AuthorDto getDtoTestAuthor2() {
+        return AuthorDto.builder().age(18).id(null).name("teando").build();
+    }
+    public static AuthorDto getDtoTestAuthor3() {
+        return AuthorDto.builder().age(43).id(null).name("huynhngoc").build();
     }
 
     // book related
