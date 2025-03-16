@@ -1,4 +1,4 @@
-package com.hankhongg.postgresql.domain;
+package com.hankhongg.postgresql.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "books")
-public class Book {
+public class BookEntity {
     @Id
     private String isbn;
 
@@ -20,5 +20,5 @@ public class Book {
 
     @ManyToOne(cascade = CascadeType.ALL) // 1 book 1 author BUT n books can belong to only 1 author
     @JoinColumn(name = "author_id") // join the other column - which obviously is "author_id"
-    private Author author; //bc its Spring so u can do it :o
+    private AuthorEntity authorEntity; //bc its Spring so u can do it :o
 }

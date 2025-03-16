@@ -1,7 +1,7 @@
 package com.hankhongg.postgresql.repositories;
 
 import com.hankhongg.postgresql.TestDataUtil;
-import com.hankhongg.postgresql.domain.Author;
+import com.hankhongg.postgresql.domain.entities.AuthorEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,9 +11,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,11 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class AuthorRepositoryIntegrationTests {
+public class AuthorEntityRepositoryIntegrationTests {
     private AuthorRepository authorRepository;
     private BookRepository bookRepository;
     @Autowired
-    public AuthorRepositoryIntegrationTests(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public AuthorEntityRepositoryIntegrationTests(AuthorRepository authorRepository, BookRepository bookRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
     }
@@ -47,38 +44,38 @@ public class AuthorRepositoryIntegrationTests {
 //        assertThat(result.isPresent()).isTrue();
 //        assertThat(author).isEqualTo(result);
 
-        Author author = TestDataUtil.getTestAuthor1();
-        author = authorRepository.save(author);
-        Optional<Author> result = authorRepository.findById(author.getId());
+        AuthorEntity authorEntity = TestDataUtil.getTestAuthor1();
+        authorEntity = authorRepository.save(authorEntity);
+        Optional<AuthorEntity> result = authorRepository.findById(authorEntity.getId());
         assertThat(result.isPresent()).isTrue();
-        assertThat(author).isEqualTo(result.get());
+        assertThat(authorEntity).isEqualTo(result.get());
     }
     @Test
     public void authorAllCanBeCreatedAndRecalledHibernateTest(){
-        Author author1 = TestDataUtil.getTestAuthor1();
-        Author author2 = TestDataUtil.getTestAuthor2();
-        Author author3 = TestDataUtil.getTestAuthor3();
+        AuthorEntity authorEntity1 = TestDataUtil.getTestAuthor1();
+        AuthorEntity authorEntity2 = TestDataUtil.getTestAuthor2();
+        AuthorEntity authorEntity3 = TestDataUtil.getTestAuthor3();
 
-        authorRepository.save(author1);
-        authorRepository.save(author2);
-        authorRepository.save(author3);
+        authorRepository.save(authorEntity1);
+        authorRepository.save(authorEntity2);
+        authorRepository.save(authorEntity3);
 
-        Iterable<Author> authors = authorRepository.findAll();
-        assertThat(authors).hasSize(3).containsExactly(author1, author2, author3);
+        Iterable<AuthorEntity> authors = authorRepository.findAll();
+        assertThat(authors).hasSize(3).containsExactly(authorEntity1, authorEntity2, authorEntity3);
     }
     @Test
     public void authorCanBeUpdatedAndRecalledHibernateTest(){
-        Author author1 = TestDataUtil.getTestAuthor1();
-        authorRepository.save(author1);
+        AuthorEntity authorEntity1 = TestDataUtil.getTestAuthor1();
+        authorRepository.save(authorEntity1);
         // change the name but only to the instance NOT the db
-        author1.setName("haruka");
+        authorEntity1.setName("haruka");
         // then update it based on the id
-        authorRepository.save(author1);
+        authorRepository.save(authorEntity1);
 
-        Optional<Author> result = authorRepository.findById(author1.getId());
+        Optional<AuthorEntity> result = authorRepository.findById(authorEntity1.getId());
 
         assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(author1);
+        assertThat(result.get()).isEqualTo(authorEntity1);
     }
 
     @Test
@@ -88,10 +85,10 @@ public class AuthorRepositoryIntegrationTests {
 //        authorDaoUnderTest.delete(author1.getId());
 //        Optional<Author> result = authorDaoUnderTest.findOne(author1.getId());
 //        assertThat(result).isEmpty();
-        Author author1 = TestDataUtil.getTestAuthor1();
-        authorRepository.save(author1);
-        authorRepository.delete(author1);
-        Optional<Author> result = authorRepository.findById(author1.getId());
+        AuthorEntity authorEntity1 = TestDataUtil.getTestAuthor1();
+        authorRepository.save(authorEntity1);
+        authorRepository.delete(authorEntity1);
+        Optional<AuthorEntity> result = authorRepository.findById(authorEntity1.getId());
         assertThat(result).isEmpty();
     }
 }

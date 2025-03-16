@@ -1,4 +1,4 @@
-package com.hankhongg.postgresql.domain;
+package com.hankhongg.postgresql.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity // declare it as an entity for jpa
 @Table(name = "authors") // name of the table is authors
-public class Author {
+public class AuthorEntity {
     // primary key
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "author_id_seq")
