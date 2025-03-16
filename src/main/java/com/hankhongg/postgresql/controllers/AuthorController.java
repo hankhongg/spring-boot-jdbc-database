@@ -5,6 +5,8 @@ import com.hankhongg.postgresql.domain.entities.AuthorEntity;
 import com.hankhongg.postgresql.mappers.Mapper;
 import com.hankhongg.postgresql.mappers.impl.AuthorMapper;
 import com.hankhongg.postgresql.services.AuthorService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,9 +24,9 @@ public class AuthorController {
     // we dont want data leaks
     // => use Data Transfer Object
     @PostMapping(path="/authors")
-    public AuthorDto createAuthor(@RequestBody AuthorDto authorDto) {
+    public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
         AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
         AuthorEntity savedAuthorEntity = authorService.save(authorEntity);
-        return authorMapper.mapTo(savedAuthorEntity); // this is AuthorDto
+        return new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.CREATED); // this is AuthorDto then need to ResponeEntity<T>
     }
 }
