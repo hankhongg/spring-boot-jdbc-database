@@ -6,6 +6,7 @@ import com.hankhongg.postgresql.services.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -25,8 +26,7 @@ public class BookServiceImpl implements BookService {
         return StreamSupport.stream(bookRepository.findAll().spliterator(),false).collect(Collectors.toList());
     }
     @Override
-    public BookEntity getBook(Long id) {
-        //BookEntity bookEntity = bookRepository.f
-        return null;
+    public Optional<BookEntity> find(String isbn) {
+        return bookRepository.findByIsbn(isbn);
     }
 }

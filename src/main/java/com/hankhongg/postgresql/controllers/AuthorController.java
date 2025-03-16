@@ -45,7 +45,7 @@ public class AuthorController {
         return authorDtoList;
     }
     @GetMapping(path="/authors/{id}")
-    public ResponseEntity<AuthorDto> getAuthorById(@PathVariable("id") Long id) {
+    public ResponseEntity<AuthorDto> getAuthor(@PathVariable("id") Long id) {
         Optional<AuthorEntity> foundAuthor = authorService.find(id);
         return foundAuthor.map(authorEntity -> {
                 AuthorDto authorDto = authorMapper.mapTo(authorEntity);

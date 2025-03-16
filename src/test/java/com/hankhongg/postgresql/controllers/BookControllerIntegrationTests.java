@@ -74,4 +74,35 @@ public class BookControllerIntegrationTests {
                 MockMvcResultMatchers.jsonPath("$[0].title").value("A Man Called Ove")
         );
     }
+    @Test
+    public void http200BookFindOneTestStatus() throws Exception {
+        BookEntity bookEntity = TestDataUtil.getEntityTestBook1(null);
+        bookService.createBook(bookEntity, bookEntity.getIsbn());
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/books/" + bookEntity.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+    @Test
+    public void http200BookFindOneTestStatusNOTFOUND() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.get("/books/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(
+                        MockMvcResultMatchers.status().isNotFound()
+                );
+    }
+    @Test
+    public void http200BookFindOneTest() throws Exception {
+        BookEntity bookEntity = TestDataUtil.getEntityTestBook1(null);
+        bookService.createBook(bookEntity, bookEntity.getIsbn());
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/books/" + bookEntity.getIsbn()).contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.isbn").value(bookEntity.getIsbn())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.title").value(bookEntity.getTitle())
+        );
+    }
 }
