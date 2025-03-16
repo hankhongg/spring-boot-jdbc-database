@@ -38,4 +38,5 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteAll();
         return StreamSupport.stream(bookRepository.findAll().spliterator(),false).collect(Collectors.toList());
     }
+    
 }

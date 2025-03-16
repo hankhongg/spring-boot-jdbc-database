@@ -165,4 +165,50 @@ public class AuthorControllerIntegrationTests {
                         MockMvcResultMatchers.jsonPath("$.age").value(authorDto.getAge())
                 );
     }
+
+    @Test
+    public void http200AuthorPartialUpdateTestStatusNOTFOUND() throws Exception {
+        AuthorDto authorDto = TestDataUtil.getDtoTestAuthor1();
+        String authorJson = mapper.writeValueAsString(authorDto);
+        AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
+        authorService.save(authorEntity);
+
+        mockMvc.perform(MockMvcRequestBuilders.patch("/authors/99" + authorEntity.getId())
+                .contentType(MediaType.APPLICATION_JSON).content(authorJson))
+                .andExpect(
+                        MockMvcResultMatchers.status().isNotFound()
+                );
+    }
+    @Test
+    public void http200AuthorPartialUpdateTestStatus() throws Exception {
+        AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
+        authorService.save(authorEntity);
+        AuthorDto authorDto = TestDataUtil.getDtoTestAuthor1();
+        String authorJson = mapper.writeValueAsString(authorDto);
+        mockMvc.perform(MockMvcRequestBuilders.patch("/authors/" + authorEntity.getId())
+                .contentType(MediaType.APPLICATION_JSON).content(authorJson))
+                .andExpect(
+                        MockMvcResultMatchers.status().isOk()
+                );
+    }
+    @Test
+    public void http200AuthorPartialUpdateTest() throws Exception {
+        AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
+        authorService.save(authorEntity);
+
+        AuthorDto authorDto = TestDataUtil.getDtoTestAuthor1();
+        authorDto.setName("UPDATED");
+        String authorJson = mapper.writeValueAsString(authorDto);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/authors/" + authorEntity.getId()
+                ).contentType(MediaType.APPLICATION_JSON).content(authorJson)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.id").value(authorEntity.getId())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.name").value("UPDATED")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.age").value(authorEntity .getAge())
+        );
+    }
 }
