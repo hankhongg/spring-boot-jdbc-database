@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hankhongg.postgresql.TestDataUtil;
 import com.hankhongg.postgresql.domain.dto.AuthorDto;
 import com.hankhongg.postgresql.domain.entities.AuthorEntity;
+import com.hankhongg.postgresql.services.AuthorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 public class AuthorControllerIntegrationTests {
     private MockMvc mockMvc;
     private ObjectMapper mapper = new ObjectMapper();
+    private AuthorService authorService;
     @Autowired
-    public AuthorControllerIntegrationTests(MockMvc mockMvc, ObjectMapper mapper) {
+    public AuthorControllerIntegrationTests(MockMvc mockMvc, ObjectMapper mapper, AuthorService authorService) {
         this.mockMvc = mockMvc;
         this.mapper = mapper;
+        this.authorService = authorService;
     }
     @Test
     public void http201AuthorCreatedTestStatus() throws Exception {
@@ -73,6 +76,8 @@ public class AuthorControllerIntegrationTests {
     // need to use service to add one to check, as it keeps delete everything after per run
     @Test
     public void http200AuthorListAllTest() throws Exception {
+        AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
+        authorService.save(authorEntity);
         mockMvc.perform(MockMvcRequestBuilders.get("/authors")
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(

@@ -26,10 +26,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 public class BookControllerIntegrationTests {
     private MockMvc mockMvc;
     private ObjectMapper objectMapper = new ObjectMapper();
+    private BookService bookService;
     @Autowired
-    public BookControllerIntegrationTests(MockMvc mockMvc, ObjectMapper objectMapper) {
+    public BookControllerIntegrationTests(MockMvc mockMvc, ObjectMapper objectMapper, BookService bookService) {
         this.mockMvc = mockMvc;
         this.objectMapper = objectMapper;
+        this.bookService = bookService;
     }
 
     @Test
@@ -52,6 +54,24 @@ public class BookControllerIntegrationTests {
                 MockMvcResultMatchers.jsonPath("$.isbn").value(bookDto.getIsbn())
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.title").value(bookDto.getTitle())
+        );
+    }
+    @Test
+    public void http200BookListAllTestStatus() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/books").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(
+                        MockMvcResultMatchers.status().isOk()
+                );
+    }
+    @Test
+    public void http200BookListAllTest() throws Exception {
+        BookEntity bookEntity = TestDataUtil.getEntityTestBook1(null);
+        bookService.createBook(bookEntity, bookEntity.getIsbn());
+        mockMvc.perform(MockMvcRequestBuilders.get("/books").contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].isbn").value("B01")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].title").value("A Man Called Ove")
         );
     }
 }
