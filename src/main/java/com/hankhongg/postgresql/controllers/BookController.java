@@ -49,7 +49,7 @@ public class BookController {
 //        List<BookDto> bookDtoList = bookEntityList.stream().map(bookMapper::mapTo).collect(Collectors.toList());
 //        return bookDtoList;
 //    }
-    
+
     // use http://localhost:8080/books?size=1&page=1 to limit page and size
     @GetMapping(path="/books")
     public Page<BookDto> findAll(Pageable pageable){
