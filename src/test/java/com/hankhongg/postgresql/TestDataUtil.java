@@ -11,10 +11,10 @@ public final class TestDataUtil {
         return Author.builder().age(20).id(null).name("hankhongg").build();
     }
     public static Author getTestAuthor2() {
-        return Author.builder().age(18).id(2L).name("teando").build();
+        return Author.builder().age(18).id(null).name("teando").build();
     }
     public static Author getTestAuthor3() {
-        return Author.builder().age(43).id(3L).name("huynhngoc").build();
+        return Author.builder().age(43).id(null).name("huynhngoc").build();
     }
 
     // book related
