@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookService {
-    public BookEntity createBook(BookEntity bookEntity, String isbn);
+    public BookEntity createAndUpdateBook(BookEntity bookEntity, String isbn);
     public List<BookEntity> findAll();
     public Optional<BookEntity> find(String isbn);
-
+    public boolean isExists(String isbn);
+    public List<BookEntity> deleteAllBooks();
 }

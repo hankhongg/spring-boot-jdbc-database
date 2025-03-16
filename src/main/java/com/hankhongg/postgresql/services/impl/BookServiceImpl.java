@@ -17,7 +17,7 @@ public class BookServiceImpl implements BookService {
         this.bookRepository = bookRepository;
     }
     @Override
-    public BookEntity createBook(BookEntity bookEntity, String isbn) {
+    public BookEntity createAndUpdateBook(BookEntity bookEntity, String isbn) {
         bookEntity.setIsbn(isbn);
         return this.bookRepository.save(bookEntity);
     }
@@ -29,5 +29,13 @@ public class BookServiceImpl implements BookService {
     public Optional<BookEntity> find(String isbn) {
         return bookRepository.findByIsbn(isbn);
     }
-
+    @Override
+    public boolean isExists(String isbn) {
+        return bookRepository.findByIsbn(isbn).isPresent();
+    }
+    @Override
+    public List<BookEntity> deleteAllBooks() {
+        bookRepository.deleteAll();
+        return StreamSupport.stream(bookRepository.findAll().spliterator(),false).collect(Collectors.toList());
+    }
 }
