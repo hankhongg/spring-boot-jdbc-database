@@ -4,6 +4,7 @@ import com.hankhongg.postgresql.domain.entities.AuthorEntity;
 import com.hankhongg.postgresql.domain.entities.BookEntity;
 import com.hankhongg.postgresql.repositories.BookRepository;
 import com.hankhongg.postgresql.services.BookService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,5 +49,9 @@ public class BookServiceImpl implements BookService {
             return bookRepository.save(existingBook);
         }).orElseThrow(() -> new RuntimeException("Book does not exist"));
     }
-
+    @Transactional
+    public void delete(String isbn) {
+        // gotta use this instead of bookRepository.deleteByIsbn(isbn)
+        bookRepository.findByIsbn(isbn).ifPresent(bookRepository::delete);
+    }
 }

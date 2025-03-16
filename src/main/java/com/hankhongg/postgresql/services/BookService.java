@@ -13,4 +13,5 @@ public interface BookService {
     public boolean isExists(String isbn);
     public List<BookEntity> deleteAllBooks();
     public BookEntity partialUpdate(String isbn, BookEntity bookEntity);
+    public void delete(String isbn);
 }

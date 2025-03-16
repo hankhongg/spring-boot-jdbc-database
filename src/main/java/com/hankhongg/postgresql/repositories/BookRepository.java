@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface BookRepository extends CrudRepository<BookEntity, Long> {
     Optional<BookEntity> findByIsbn(String isbn);
+    // if not recognize => add annotation @Query("//sql")
 }
