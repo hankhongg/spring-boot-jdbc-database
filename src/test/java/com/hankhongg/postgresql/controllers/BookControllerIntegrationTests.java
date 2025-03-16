@@ -20,6 +20,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.awt.print.Book;
+
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -155,6 +157,52 @@ public class BookControllerIntegrationTests {
                 MockMvcResultMatchers.jsonPath("$.title").value(bookDto.getTitle())
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.author").value(bookDto.getAuthor())
+        );
+    }
+
+    @Test
+    public void http404BookPartialUpdateTestStatusNOTFOUND() throws Exception {
+        BookEntity bookEntity = TestDataUtil.getEntityTestBook1(null);
+        bookService.createAndUpdateBook(bookEntity, bookEntity.getIsbn());
+        BookDto bookDto = TestDataUtil.getDtoTestBook1(null);
+        String bookJson = objectMapper.writeValueAsString(bookDto);
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/books/99999" + bookDto.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(bookJson)
+        ).andExpect(
+                MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+    @Test
+    public void http200BookPartialUpdateTestStatus() throws Exception {
+        BookEntity bookEntity = TestDataUtil.getEntityTestBook1(null);
+        bookService.createAndUpdateBook(bookEntity, bookEntity.getIsbn());
+        BookDto bookDto = TestDataUtil.getDtoTestBook1(null);
+        String bookJson = objectMapper.writeValueAsString(bookDto);
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/books/" + bookEntity.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(bookJson)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+    @Test
+    public void http200BookPartialUpdateTest() throws Exception {
+        BookEntity bookEntity = TestDataUtil.getEntityTestBook1(null);
+        bookService.createAndUpdateBook(bookEntity, bookEntity.getIsbn());
+        BookDto bookDto = TestDataUtil.getDtoTestBook1(null);
+        bookDto.setTitle("UPDATED");
+        String bookJson = objectMapper.writeValueAsString(bookDto);
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/books/" + bookEntity.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(bookJson)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.isbn").value(bookEntity.getIsbn())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.title").value("UPDATED")
         );
     }
 }

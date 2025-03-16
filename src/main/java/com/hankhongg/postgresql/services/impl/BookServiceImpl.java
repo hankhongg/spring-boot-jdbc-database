@@ -1,5 +1,6 @@
 package com.hankhongg.postgresql.services.impl;
 
+import com.hankhongg.postgresql.domain.entities.AuthorEntity;
 import com.hankhongg.postgresql.domain.entities.BookEntity;
 import com.hankhongg.postgresql.repositories.BookRepository;
 import com.hankhongg.postgresql.services.BookService;
@@ -38,5 +39,14 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteAll();
         return StreamSupport.stream(bookRepository.findAll().spliterator(),false).collect(Collectors.toList());
     }
-    
+    @Override
+    public BookEntity partialUpdate(String isbn, BookEntity bookEntity) {
+        bookEntity.setIsbn(isbn);
+
+        return bookRepository.findByIsbn(isbn).map(existingBook -> {
+            Optional.ofNullable(bookEntity.getTitle()).ifPresent(existingBook::setTitle);
+            return bookRepository.save(existingBook);
+        }).orElseThrow(() -> new RuntimeException("Book does not exist"));
+    }
+
 }

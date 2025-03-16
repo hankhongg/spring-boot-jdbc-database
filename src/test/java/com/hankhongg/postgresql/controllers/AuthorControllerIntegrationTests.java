@@ -99,7 +99,7 @@ public class AuthorControllerIntegrationTests {
                 );
     }
     @Test
-    public void http200AuthorFindOneTestStatusNOTFOUND() throws Exception {
+    public void http404AuthorFindOneTestStatusNOTFOUND() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/authors/1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -123,7 +123,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void http200AuthorFullUpdateTestStatusNOTFOUND() throws Exception {
+    public void http404AuthorFullUpdateTestStatusNOTFOUND() throws Exception {
         AuthorDto authorDto = TestDataUtil.getDtoTestAuthor1();
         String authorJson = mapper.writeValueAsString(authorDto);
         mockMvc.perform(MockMvcRequestBuilders.put("/authors/999")
@@ -167,7 +167,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void http200AuthorPartialUpdateTestStatusNOTFOUND() throws Exception {
+    public void http404AuthorPartialUpdateTestStatusNOTFOUND() throws Exception {
         AuthorDto authorDto = TestDataUtil.getDtoTestAuthor1();
         String authorJson = mapper.writeValueAsString(authorDto);
         AuthorEntity authorEntity = TestDataUtil.getEntityTestAuthor1();
